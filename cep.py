@@ -52,6 +52,3 @@ def consultar_cep(cep):
         "uf": dados.get("uf", ""),
     }
 
-
-# teste
-print(consultar_cep("01001000"))

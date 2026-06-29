@@ -2,7 +2,7 @@
 ## Pedro Henrique Moreira
 ## Lucas Ulrich
 ## ====================================================
-
+import sqlite3
 from banco import Banco
 
 
@@ -122,22 +122,51 @@ class Prestador:
         banco = Banco()
         try:
             c = banco.conexao.cursor()
-            c.execute("select * from prestadores where id=?", (id,))
+            c.execute("select * from prestadores where id=?", (self.id,))
             for linha in c:
                 self.id = linha[0]
                 self.nome = linha[1]
-                self.tipo_documento = linha[2]
-                self.documento = linha[3]
-                self.data_nascimento = linha[4]
-                self.rua = linha[5]
-                self.numero = linha[6]
-                self.complemento = linha[7]
-                self.bairro = linha[8]
-                self.cidade = linha[9]
-                self.uf = linha[10]
-                self.cep = linha[11]
-                self.contato = linha[12]
+                self.data_nascimento = linha[2]               
+                self.rua = linha[3]
+                self.numero = linha[4]
+                self.complemento = linha[5]
+                self.bairro = linha[6]
+                self.cidade = linha[7]
+                self.uf = linha[8]
+                self.cep = linha[9]
+                self.contato = linha[10]
+                self.tipo_documento = linha[11]
+                self.documento = linha[12]
+                
             c.close()
             return "Busca feita com sucesso!"
         except sqlite3.Error:
             return "Ocorreu um erro na busca do prestador"
+
+    @staticmethod
+    def selectTodos():
+        banco = Banco()
+        lista = []
+        try:
+            c = banco.conexao.cursor()
+            c.execute("select * from prestadores")   # sem where = todos
+            for linha in c:
+                p = Prestador()
+                p.id = linha[0]
+                p.nome = linha[1]
+                p.data_nascimento = linha[2]
+                p.rua = linha[3]
+                p.numero = linha[4]
+                p.complemento = linha[5]
+                p.bairro = linha[6]
+                p.cidade = linha[7]
+                p.uf = linha[8]
+                p.cep = linha[9]
+                p.contato = linha[10]
+                p.tipo_documento = linha[11]
+                p.documento = linha[12]
+                lista.append(p)
+            c.close()
+            return lista
+        except sqlite3.Error:
+            return []

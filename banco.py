@@ -11,17 +11,23 @@ class Banco:
         self.conexao = sqlite3.connect("prestador.db")
         self.createTable()
 
-    def createTable():
+    def createTable(self):
         c = self.conexao.cursor()
 
-        c.execute(""""create table if not exists prestadores(
+        c.execute("""create table if not exists prestadores(
         id integer primary key autoincrement,
         nome text,
-        data_nasc text,
-        endereco text,
+        data_nascimento text,
+        rua text,
+        numero text,
+        complemento text,
+        bairro text,
+        cidade text,
+        uf text,
+        cep text,
         contato integer,
-        tipo_doc text,
-        doc integer)""")
+        tipo_documento text,
+        documento text)""")
 
         self.conexao.commit()
         c.close()
